@@ -1,0 +1,17 @@
+$font-h2: 32;
+.container {
+  min-height: 100vh;
+  padding: 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+h2.title {
+  font-size: $font-h2;
+  color: #fff;
+  text-align: center;
+  margin: 20px 0;
+  text-transform: uppercase;
+}
