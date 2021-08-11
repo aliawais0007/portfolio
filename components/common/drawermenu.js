@@ -78,7 +78,7 @@ const DrawerMenu = () => {
             <div style={styles.listWrapper}>
                 {menu.map((text, index) =>
                     <div key={index}>
-                        <Link key={index} href={"#" + text.toLowerCase()} >
+                        <a key={index} href={"#" + text.toLowerCase()} >
                             <List key={index} style={styles.link}>
                                 <ListItem className={sassStyles.linkhover}>
                                     <ListItemIcon>
@@ -87,7 +87,7 @@ const DrawerMenu = () => {
                                     <ListItemText primary={text} />
                                 </ListItem>
                             </List>
-                        </Link>
+                        </a>
                         <Divider />
                     </div>
                 )

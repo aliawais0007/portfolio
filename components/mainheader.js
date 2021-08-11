@@ -5,14 +5,14 @@ import { useEffect, useState } from "react";
 import Typed from 'react-typed';
 import Image from "next/image";
 
+
 export const MainHeader = () => {
     const [myTitle, setTagLine] = useState(title);
     const [index, setIndex] = useState(0);
     return (
         <section className={sassStyles.containerWrapepr}>
             <div className={sassStyles.overlay} />
-
-            <Image src={"https://i.ibb.co/k804dp2/hero-bg.jpg"} className={sassStyles.fixed_bg} width="100%" height="100%" />
+            <Image src={imagePath + "hero-bg.jpg"} className={sassStyles.fixed_bg} />
             <div className={sassStyles.headerText}>
                 <div>
                     <h1 className={sassStyles.name}>{name}</h1>
