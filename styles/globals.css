@@ -1,3 +1,8 @@
+:root {
+  --color-primary: #fff;
+  --color-secondary: #000;
+}
+
 html,
 body {
   padding: 0;

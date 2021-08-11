@@ -1,4 +1,5 @@
-$font-h2: 32;
+$font-h2: 26px;
+
 .container {
   min-height: 100vh;
   padding: 0 0.5rem;
@@ -10,8 +11,69 @@ $font-h2: 32;
 }
 h2.title {
   font-size: $font-h2;
-  color: #fff;
+  color: var(--color-primary);
   text-align: center;
   margin: 20px 0;
-  text-transform: uppercase;
+}
+
+.closeicon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.linkhover {
+  color: rgb(190, 190, 190);
+  &:hover {
+    color: #fff;
+  }
+}
+
+.fixed_bg {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.containerWrapepr {
+  height: 100vh;
+  width: 100%;
+}
+
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba($color: #000000, $alpha: 0.1);
+  z-index: 0;
+}
+
+.headerText {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1301;
+  height: 100%;
+  position: relative;
+}
+
+.name {
+  color: #fff;
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 56px;
+  margin: 0;
+  letter-spacing: 4px;
+}
+.tagline {
+  color: #fff;
+  font-size: 28px;
+  line-height: 30px;
+  font-weight: 300;
+  margin-top: 20px;
+  &span {
+    text-decoration: underline;
+  }
 }

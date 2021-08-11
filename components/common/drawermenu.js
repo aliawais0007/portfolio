@@ -1,5 +1,6 @@
 import { render } from "react-dom";
 import React from 'react';
+import Image from "next/image";
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -16,10 +17,11 @@ import InfoIcon from '@material-ui/icons/Info';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import StorageIcon from '@material-ui/icons/Storage';
+import CloseIcon from '@material-ui/icons/Close';
 import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
+import sassStyles from '../../styles/Home.module.scss';
 import { useState } from "react";
-
-const publicPath = "../../public/assets/"
+import { imagePath, menu, name } from "../../contants";
 
 const useStyles = makeStyles({
     list: {
@@ -31,9 +33,9 @@ const useStyles = makeStyles({
         flexDirection: "column",
         alignItems: "center",
         padding: "40px",
-        
+
     },
-    icons:{
+    icons: {
         color: "#fff"
     }
 });
@@ -50,12 +52,12 @@ const styles = {
         flexDirection: "column",
         width: "100%"
     },
-    iconColor:{
+    iconColor: {
         color: "#fff"
     },
     link: {
         cursor: "pointer",
-        "&:hover":{
+        "&:hover": {
             opacity: 0.7
         }
     }
@@ -65,27 +67,29 @@ const styles = {
 
 const DrawerMenu = () => {
     const classes = useStyles();
-    const menu = ["HOME", "ABOUT", "RESUME", "PORTFOLIO", "SERVICES", "CONTACT"];
-    const logo = [<HomeIcon style={styles.iconColor}/>, <InfoIcon style={styles.iconColor}/>, <FileCopyIcon style={styles.iconColor}/>, <LibraryBooksIcon style={styles.iconColor}/>, <StorageIcon style={styles.iconColor}/>, <PermContactCalendarIcon style={styles.iconColor}/>];
-    
+    const logo = [<HomeIcon style={styles.iconColor} key={1} />, <InfoIcon style={styles.iconColor} key={2} />, <FileCopyIcon style={styles.iconColor} key={3} />, <LibraryBooksIcon style={styles.iconColor} key={4} />, <StorageIcon style={styles.iconColor} key={5} />, <PermContactCalendarIcon style={styles.iconColor} key={6} />];
     return (
         <div className={classes.list}>
-            <Avatar src={"../../assets/images/ali-awais.png"} style={styles.navLogo}/>
-            <h2 className={"title"}>
-                Ali Awais
+            <CloseIcon style={styles.iconColor} className={sassStyles.closeicon} />
+            <Avatar src={imagePath + "ali-awais.png"} style={styles.navLogo} />
+            <h2 className={sassStyles.title}>
+                {name}
             </h2>
             <div style={styles.listWrapper}>
                 {menu.map((text, index) =>
-                    <Link href={"#"+text.toLowerCase()} >
-                        <List key={index} style={styles.link}>
-                            <ListItem >
-                                <ListItemIcon>
-                                    {logo[index]}
-                                </ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItem>
-                        </List>
-                    </Link>
+                    <div key={index}>
+                        <Link key={index} href={"#" + text.toLowerCase()} >
+                            <List key={index} style={styles.link}>
+                                <ListItem className={sassStyles.linkhover}>
+                                    <ListItemIcon>
+                                        {logo[index]}
+                                    </ListItemIcon>
+                                    <ListItemText primary={text} />
+                                </ListItem>
+                            </List>
+                        </Link>
+                        <Divider />
+                    </div>
                 )
                 }
             </div>
@@ -95,13 +99,10 @@ const DrawerMenu = () => {
 
 
 export default function Header() {
-    const [isOpened, toggleDrawer] = useState(false);
+    const [isOpened, toggleDrawer] = useState(true);
     return (
         <>
-            <Button onClick={() => isOpened ? toggleDrawer(false) : toggleDrawer(true)}>
-                Open Drawer
-            </Button>
-            <Drawer anchor={"left"} onClose={() => { toggleDrawer(false) }} open={isOpened}>
+            <Drawer anchor={"left"} onClose={() => { toggleDrawer(true) }} open={isOpened}>
                 <DrawerMenu />
             </Drawer>
         </>
