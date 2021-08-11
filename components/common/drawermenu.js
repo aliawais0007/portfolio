@@ -19,6 +19,9 @@ import { useState } from "react";
 import { imagePath, menu, name } from "../../contants";
 
 const useStyles = makeStyles({
+    root: {
+        zIndex: 1302
+    },
     list: {
         width: 300,
         height: "100%",
@@ -28,6 +31,7 @@ const useStyles = makeStyles({
         flexDirection: "column",
         alignItems: "center",
         padding: "40px",
+        zIndex: 1302
 
     },
     icons: {
@@ -94,10 +98,11 @@ const DrawerMenu = () => {
 
 
 export default function Header() {
+    const classes = useStyles();
     const [isOpened, toggleDrawer] = useState(true);
     return (
         <>
-            <Drawer anchor={"left"} onClose={() => { toggleDrawer(true) }} open={isOpened}>
+            <Drawer anchor={"left"} onClose={() => { toggleDrawer(false) }} open={isOpened}>
                 <DrawerMenu />
             </Drawer>
         </>

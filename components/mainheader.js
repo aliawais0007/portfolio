@@ -1,9 +1,7 @@
-import Text from "@material-ui/core"
-import { imagePath, tagLine, name, title } from "../contants";
+import { tagLine, name, title } from "../contants";
 import sassStyles from '../styles/Home.module.scss';
 import { useEffect, useState } from "react";
 import Typed from 'react-typed';
-import Image from "next/image";
 
 
 export const MainHeader = () => {
