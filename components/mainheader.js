@@ -12,7 +12,7 @@ export const MainHeader = () => {
     return (
         <section className={sassStyles.containerWrapepr}>
             <div className={sassStyles.overlay} />
-            <Image src={imagePath + "hero-bg.jpg"} className={sassStyles.fixed_bg} />
+            <div className={sassStyles.fixed_bg} />
             <div className={sassStyles.headerText}>
                 <div>
                     <h1 className={sassStyles.name}>{name}</h1>
