@@ -4,7 +4,7 @@ import Avatar from "@material-ui/core/Avatar";
 
 export const CvDetails = () => {
     return (
-        <section className={sassStyles.wrapperSection}>
+        <section className={sassStyles.wrapperSection} id="about">
             <div className={"container"}>
                 <div className={"row"}>
                     <div className={"col-12"}>

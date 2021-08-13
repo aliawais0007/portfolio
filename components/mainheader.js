@@ -13,7 +13,7 @@ export const MainHeader = (props) => {
         props.setDrawerStatus(!props.isOpened);
     }
     return (
-        <section className={sassStyles.containerWrapepr}>
+        <section className={sassStyles.containerWrapepr} id="home">
             <div className={sassStyles.overlay} />
             <div className={sassStyles.fixed_bg} />
             <div className={sassStyles.headerText}>
