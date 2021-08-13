@@ -103,7 +103,7 @@ export default function Header(props) {
     const [isOpened, toggleDrawer] = useState(props.isOpened);
     useEffect(() => {
         toggleDrawer(props.isOpened);
-    });
+    }, [props.isOpened]);
     return (
         <>
             <SwipeableDrawer className={classes.root} anchor={"left"} onClose={() => { props.setDrawerStatus(false) }} open={isOpened}>

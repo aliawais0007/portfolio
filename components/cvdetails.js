@@ -19,7 +19,7 @@ export const CvDetails = () => {
 
                 <div className={"row mt-4 justify-content-center"}>
                     <div className={"col-10 col-md-3"}>
-                        <Image src={"/assets/images/ali-awais.png"} title="ali awais" width="300" height="300" className={sassStyles.cvPic} />
+                        <Image src={"/assets/images/ali-awais.png"} title="ali awais" alt="ali awais" width="300" height="300" className={sassStyles.cvPic} />
                     </div>
                     <div className={"col-12 col-md-9"}>
                         <h2 className={sassStyles.sectionTitle + " " + sassStyles.sectionTitleAfter}>
