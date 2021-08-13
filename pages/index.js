@@ -26,7 +26,7 @@ export default function Home() {
     toggleDrawer(status);
   }
   useEffect(() => {
-    toggleDrawer(width > 767 ? true : false)
+    toggleDrawer(width > 930 ? true : false)
   }, [width])
   return (
     <>

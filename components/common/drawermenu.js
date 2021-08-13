@@ -17,6 +17,7 @@ import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
 import sassStyles from '../../styles/Home.module.scss';
 import { useState } from "react";
 import { imagePath, menu, name } from "../../contants";
+import { useRouter } from "next/router";
 
 const useStyles = makeStyles({
     root: {
@@ -65,7 +66,7 @@ const styles = {
 
 
 const DrawerMenu = (props) => {
-
+    const router = useRouter();
     const classes = useStyles();
     const logo = [<HomeIcon style={styles.iconColor} key={1} />, <InfoIcon style={styles.iconColor} key={2} />, <FileCopyIcon style={styles.iconColor} key={3} />, <LibraryBooksIcon style={styles.iconColor} key={4} />, <StorageIcon style={styles.iconColor} key={5} />, <PermContactCalendarIcon style={styles.iconColor} key={6} />];
     return (
@@ -78,7 +79,7 @@ const DrawerMenu = (props) => {
             <div style={styles.listWrapper}>
                 {menu.map((text, index) =>
                     <div key={index}>
-                        <a key={index} href={"#" + text.toLowerCase()} >
+                        <a key={index} onClick={() => { router.push("#" + text.toLowerCase()) }} >
                             <List key={index} style={styles.link}>
                                 <ListItem className={sassStyles.linkhover}>
                                     <ListItemIcon>
