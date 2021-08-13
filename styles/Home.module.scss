@@ -128,8 +128,9 @@ h2.title {
 }
 
 .cvPic {
-  width: 100%;
-  height: auto;
+  width: 100% !important;
+  height: auto !important;
+  border-radius: 0 !important;
 }
 
 .underline {
