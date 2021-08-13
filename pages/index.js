@@ -32,7 +32,6 @@ export default function Home() {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-
       </Head>
       <Header isOpened={isOpened} setDrawerStatus={setDrawerStatus} />
       <MainHeader isOpened={isOpened} setDrawerStatus={setDrawerStatus} />
