@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
+import { SwipeableDrawer } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
@@ -20,7 +20,7 @@ import { imagePath, menu, name } from "../../contants";
 
 const useStyles = makeStyles({
     root: {
-        zIndex: 1302
+        width: "max-content"
     },
     list: {
         width: 300,
@@ -64,12 +64,13 @@ const styles = {
 
 
 
-const DrawerMenu = () => {
+const DrawerMenu = (props) => {
+
     const classes = useStyles();
     const logo = [<HomeIcon style={styles.iconColor} key={1} />, <InfoIcon style={styles.iconColor} key={2} />, <FileCopyIcon style={styles.iconColor} key={3} />, <LibraryBooksIcon style={styles.iconColor} key={4} />, <StorageIcon style={styles.iconColor} key={5} />, <PermContactCalendarIcon style={styles.iconColor} key={6} />];
     return (
         <div className={classes.list}>
-            <CloseIcon style={styles.iconColor} className={sassStyles.closeicon} />
+            <CloseIcon style={styles.iconColor} className={sassStyles.closeicon} onClick={() => props.setDrawerStatus(false)} />
             <Avatar src={imagePath + "ali-awais.png"} style={styles.navLogo} />
             <h2 className={sassStyles.title}>
                 {name}
@@ -97,14 +98,17 @@ const DrawerMenu = () => {
 }
 
 
-export default function Header() {
+export default function Header(props) {
     const classes = useStyles();
-    const [isOpened, toggleDrawer] = useState(true);
+    const [isOpened, toggleDrawer] = useState(props.isOpened);
+    useEffect(() => {
+        toggleDrawer(props.isOpened);
+    });
     return (
         <>
-            <Drawer anchor={"left"} onClose={() => { toggleDrawer(false) }} open={isOpened}>
-                <DrawerMenu />
-            </Drawer>
+            <SwipeableDrawer className={classes.root} anchor={"left"} onClose={() => { props.setDrawerStatus(false) }} open={isOpened}>
+                <DrawerMenu setDrawerStatus={props.setDrawerStatus} />
+            </SwipeableDrawer>
         </>
     );
 }

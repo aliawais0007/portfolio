@@ -1,4 +1,9 @@
-$font-h2: 26px;
+$font-h2: toRem(26);
+
+@function toRem($value) {
+  $remValue: ($value / 16) + rem;
+  @return $remValue;
+}
 
 .container {
   min-height: 100vh;
@@ -11,15 +16,15 @@ $font-h2: 26px;
 }
 h2.title {
   font-size: $font-h2;
-  color: var(--color-primary);
+  color: #fff;
   text-align: center;
-  margin: 20px 0;
+  margin: toRem(20) 0;
 }
 
 .closeicon {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: toRem(10);
+  right: toRem(10);
 }
 
 .linkhover {
@@ -49,34 +54,109 @@ h2.title {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: rgba($color: #000000, $alpha: 0.1);
-  z-index: 0;
+  background: rgba($color: #000000, $alpha: 0.5);
+  z-index: 1;
 }
 
 .headerText {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1301;
+  z-index: 2;
   height: 100%;
   position: relative;
 }
 
 .name {
   color: #fff;
-  font-size: 64px;
+  font-size: toRem(64);
   font-weight: 700;
-  line-height: 56px;
+  line-height: toRem(56);
   margin: 0;
-  letter-spacing: 4px;
+  letter-spacing: toRem(4);
 }
 .tagline {
   color: #fff;
-  font-size: 28px;
-  line-height: 30px;
+  font-size: toRem(28);
+  line-height: toRem(30);
   font-weight: 300;
-  margin-top: 20px;
+  margin-top: toRem(20);
   &span {
     text-decoration: underline;
+  }
+}
+
+.sectionTitle {
+  color: #163c6b;
+  font-size: toRem(32);
+  font-weight: bold;
+  margin-bottom: toRem(20);
+  padding-bottom: toRem(20);
+  position: relative;
+  &:after {
+    content: "";
+    width: toRem(50);
+    color: #163c6b;
+    height: toRem(3);
+    background: #163c6b;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+}
+.sectionTitleAfter {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  &:after {
+    width: 0;
+    height: 0;
+  }
+}
+
+.parahgraph {
+  font-size: #fff;
+  margin-bottom: 0;
+}
+.wrapperSection {
+  background: #fff;
+  position: relative;
+  padding: toRem(50) toRem(10);
+  z-index: 1;
+  @media (min-width: 768px) {
+    margin-left: toRem(300);
+  }
+}
+
+.cvPic {
+  width: 100%;
+  height: auto;
+}
+
+.underline {
+  position: relative;
+  padding-bottom: 15px;
+  &:after {
+    content: "";
+    width: 100%;
+    height: 4px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: rgba(2, 115, 255, 80%);
+  }
+}
+
+.menuIcon {
+  @media (min-width: 768px) {
+    display: none !important;
+  }
+  @media (max-width: 767px) {
+    display: block;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 38px !important;
+    height: 38px !important;
+    color: #fff;
   }
 }
