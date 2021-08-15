@@ -1,11 +1,12 @@
-import sassStyles from "../styles/Home.module.scss";
+import sassStyles from "../../styles/Home.module.scss";
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { personalDetails1, personalDetails2 } from "../contants";
-import Avatar from "@material-ui/core/Avatar";
-
+import { personalDetails1, personalDetails2 } from "../../contants";
+import { useEffect, useRef } from "react";
+import Image from "next/image";
 
 const ListItem = (props) => {
+
     return (
         <ul className={sassStyles.personalDetailUl}>
             {
@@ -21,9 +22,24 @@ const ListItem = (props) => {
     );
 }
 
-export const CvDetails = () => {
+export const PersonalDetails = (props) => {
+    const prevScrollY = useRef();
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+            const scroll = prevScrollY.current;
+            if (currentScrollY >= scroll.offsetTop) {
+                props.setMenuColor("#163c6b");
+            }
+            else props.setMenuColor("#fff");
+        };
+
+        window.addEventListener("scroll", handleScroll, { passive: true });
+
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [])
     return (
-        <section className={sassStyles.wrapperSection} id="about">
+        <section className={sassStyles.wrapperSection} id="about" ref={prevScrollY}>
             <div className={"container"}>
                 <div className={"row"}>
                     <div className={"col-12"}>
@@ -38,8 +54,7 @@ export const CvDetails = () => {
 
                 <div className={"row mt-4 justify-content-center"}>
                     <div className={"col-10 col-md-4"}>
-                        <Avatar src={"/assets/images/ali-awais.png"} className={sassStyles.cvPic} />
-
+                        <Image src="../assets/images/ali-awais.png" className={sassStyles.cvPic} width="400" height="400" />
                     </div>
                     <div className={"col-12 col-md-8"}>
                         <h2 className={sassStyles.sectionTitle + " " + sassStyles.sectionTitleAfter}>
@@ -50,10 +65,10 @@ export const CvDetails = () => {
                         </p>
 
                         <div className={"row"}>
-                            <div className={"col-6"}>
+                            <div className={"col-md-6"}>
                                 <ListItem array={personalDetails1} ulClass={"personalDetailUl"} />
                             </div>
-                            <div className={"col-6"}>
+                            <div className={"col-md-6"}>
                                 <ListItem array={personalDetails2} ulClass={"personalDetailUl"} />
                             </div>
                         </div>

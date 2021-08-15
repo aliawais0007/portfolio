@@ -1,7 +1,10 @@
 
-import Header from "../components/common/drawermenu";
-import { CvDetails } from "../components/cvdetails";
-import { MainHeader } from "../components/mainheader";
+import Header from "../components/common/DrawerMenu";
+import { About } from "../components/About";
+import { MainHeader } from "../components/MainHeader";
+import { Resume } from "../components/Resume";
+import { Services } from "../components/Services";
+import { Contact } from "../components/Contact";
 import Head from "next/head";
 import { useState, useLayoutEffect, useEffect } from "react";
 
@@ -21,6 +24,7 @@ function useWindowSize() {
 
 export default function Home() {
   const [width, height] = useWindowSize();
+  const [menuColor, setMenuColor] = useState("#fff");
   const [isOpened, toggleDrawer] = useState(width > 767 ? true : false);
   const setDrawerStatus = (status) => {
     toggleDrawer(status);
@@ -33,9 +37,13 @@ export default function Home() {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
+
       <Header isOpened={isOpened} setDrawerStatus={setDrawerStatus} />
-      <MainHeader isOpened={isOpened} setDrawerStatus={setDrawerStatus} />
-      <CvDetails />
+      <MainHeader isOpened={isOpened} setDrawerStatus={setDrawerStatus} menuColor={menuColor} />
+      <About setMenuColor={setMenuColor} />
+      <Resume />
+      <Services />
+      <Contact />
     </>
   )
 }

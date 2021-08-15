@@ -1,14 +1,11 @@
 import { tagLine, name, title } from "../contants";
 import sassStyles from '../styles/Home.module.scss';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import MenuIcon from '@material-ui/icons/Menu';
 import Typed from 'react-typed';
 
 
 export const MainHeader = (props) => {
-    const [myTitle, setTagLine] = useState(title);
-    const [drawerOpened, setStatus] = useState(props.isOpened);
-    const [index, setIndex] = useState(0);
     const handleClick = () => {
         props.setDrawerStatus(!props.isOpened);
     }
@@ -18,7 +15,7 @@ export const MainHeader = (props) => {
             <div className={sassStyles.fixed_bg} />
             <div className={sassStyles.headerText}>
                 <div>
-                    <MenuIcon className={sassStyles.menuIcon} onClick={() => handleClick()} />
+                    <MenuIcon className={sassStyles.menuIcon} onClick={() => handleClick()} style={{ color: props.menuColor }} />
                     <h1 className={sassStyles.name}>{name}</h1>
                     <h2 className={sassStyles.tagline} >
                         {tagLine + " "}

@@ -119,6 +119,7 @@ h2.title {
 .parahgraph {
   font-size: #fff;
   margin-bottom: 0;
+  margin-bottom: 0;
 }
 .wrapperSection {
   background: #fff;
@@ -161,7 +162,6 @@ h2.title {
     right: 20px;
     width: 38px !important;
     height: 38px !important;
-    color: #fff;
   }
 }
 
@@ -184,4 +184,126 @@ h2.title {
       font-weight: 600;
     }
   }
+}
+
+.progressWrapper {
+  height: 10px;
+  background: rgba(0, 0, 0, 0.2);
+}
+.progress {
+  background: #149ddd;
+  height: 100%;
+}
+
+.h2Title {
+  font-size: 26px;
+  font-weight: 700;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: rgb(5, 13, 24);
+  @media (max-width: 930px) {
+    display: none;
+  }
+}
+.h3Title {
+  line-height: 18px;
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-family: Poppins, sans-serif;
+  color: rgb(5, 13, 24);
+  margin-bottom: 10px;
+}
+
+.resumeSection {
+  position: relative;
+  border-left: 2px solid #149ddd;
+  padding: 0px 0px 20px 20px;
+  padding-left: 20px;
+  ul {
+    padding-left: 20px;
+    li {
+      padding-bottom: 10px;
+    }
+  }
+  &::before {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: -8px;
+    background: #fff;
+    border-radius: 50%;
+    top: 0;
+    border: 2px solid #149ddd;
+  }
+}
+
+.year {
+  font-size: 16px;
+  background: rgb(228, 237, 249);
+  padding: 5px 15px;
+  display: inline-block;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba($color: #fff, $alpha: 0.5);
+  box-shadow: 0 0px 15px #d2d2d2;
+  padding: 30px 20px;
+  height: 100%;
+  transition: transform 1 ease;
+  &:hover {
+    box-shadow: 0 1px 15px #d2d2d2;
+    transform: scale(1.02);
+  }
+  @media (max-width: 1200px) {
+    margin-bottom: 20px;
+  }
+  h3 {
+    text-align: center;
+    line-height: 28px;
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-family: Poppins, sans-serif;
+    color: #050d18;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+  p {
+    text-align: center;
+  }
+}
+
+div.iconWrapper {
+  background: #d2d2d2;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  border: 1px solid #149ddd;
+  border-radius: 12px;
+  padding: 30px;
+  height: 100%;
+  // input,
+  // select {
+  //   width: 100%;
+  //   height: 40px;
+  //   margin: 7.5px 0;
+  // }
+  // textarea {
+  //   width: 100%;
+  //   margin: 7.5px 0;
+  // }
 }
