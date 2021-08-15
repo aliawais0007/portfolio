@@ -22,7 +22,7 @@ const ListItem = (props) => {
     );
 }
 
-export const PersonalDetails = (props) => {
+export const PersonalDetails = () => {
     const prevScrollY = useRef();
     useEffect(() => {
         const handleScroll = () => {
@@ -54,7 +54,7 @@ export const PersonalDetails = (props) => {
 
                 <div className={"row mt-4 justify-content-center"}>
                     <div className={"col-10 col-md-4"}>
-                        <Image src="../assets/images/ali-awais.png" className={sassStyles.cvPic} width="400" height="400" />
+                        <Image alt="ali awais picture" src="../assets/images/ali-awais.png" className={sassStyles.cvPic} width="400" height="400" />
                     </div>
                     <div className={"col-12 col-md-8"}>
                         <h2 className={sassStyles.sectionTitle + " " + sassStyles.sectionTitleAfter}>
