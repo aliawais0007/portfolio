@@ -22,12 +22,13 @@ const ListItem = (props) => {
     );
 }
 
-export const PersonalDetails = () => {
+export const PersonalDetails = (props) => {
     const prevScrollY = useRef();
     useEffect(() => {
         const handleScroll = () => {
+            debugger
             const currentScrollY = window.scrollY;
-            const scroll = prevScrollY.current;
+            const scroll = prevScrollY.current; debugger
             if (currentScrollY >= scroll.offsetTop) {
                 props.setMenuColor("#163c6b");
             }
@@ -37,7 +38,7 @@ export const PersonalDetails = () => {
         window.addEventListener("scroll", handleScroll, { passive: true });
 
         return () => window.removeEventListener("scroll", handleScroll);
-    }, [])
+    }, [props.menuColor])
     return (
         <section className={sassStyles.wrapperSection} id="about" ref={prevScrollY}>
             <div className={"container"}>
@@ -54,7 +55,7 @@ export const PersonalDetails = () => {
 
                 <div className={"row mt-4 justify-content-center"}>
                     <div className={"col-10 col-md-4"}>
-                        <Image alt="ali awais picture" src="../assets/images/ali-awais.png" className={sassStyles.cvPic} width="400" height="400" />
+                        <Image unoptimized loader={() => "../../assets/images/ali-awais.png"} alt="ali awais picture" src="../../assets/images/ali-awais.png" className={sassStyles.cvPic} width="400" height="400" />
                     </div>
                     <div className={"col-12 col-md-8"}>
                         <h2 className={sassStyles.sectionTitle + " " + sassStyles.sectionTitleAfter}>

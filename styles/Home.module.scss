@@ -121,14 +121,16 @@ h2.title {
   margin-bottom: 0;
   margin-bottom: 0;
 }
+.indexMargin {
+  @media (min-width: 931px) {
+    margin-left: toRem(300);
+  }
+}
 .wrapperSection {
   background: #fff;
   position: relative;
   padding: toRem(50) toRem(10);
   z-index: 1;
-  @media (min-width: 931px) {
-    margin-left: toRem(300);
-  }
 }
 
 .cvPic {
@@ -156,12 +158,12 @@ h2.title {
     display: none !important;
   }
   @media (max-width: 930px) {
-    display: block;
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    width: 38px !important;
-    height: 38px !important;
+  display: block;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 38px !important;
+  height: 38px !important;
   }
 }
 
@@ -296,6 +298,7 @@ div.iconWrapper {
   border-radius: 12px;
   padding: 30px;
   height: 100%;
+  
   // input,
   // select {
   //   width: 100%;
@@ -306,4 +309,8 @@ div.iconWrapper {
   //   width: 100%;
   //   margin: 7.5px 0;
   // }
+}
+
+.antFormItemLabel{
+  text-align: left;
 }

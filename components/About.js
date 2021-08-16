@@ -5,7 +5,7 @@ import { Skills } from "./about/Skills";
 export const About = (props) => {
     return (
         <>
-            <PersonalDetails setMenuColor={props.setMenuColor} />
+            <PersonalDetails setMenuColor={props.setMenuColor} menuColor={props.menuColor} />
             <Facts />
             <Skills />
         </>

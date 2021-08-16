@@ -6,6 +6,8 @@ import { Resume } from "../components/Resume";
 import { Services } from "../components/Services";
 import { Contact } from "../components/Contact";
 import Head from "next/head";
+import sassStyles from '../styles/Home.module.scss';
+import "antd/dist/antd.css";
 import { useState, useLayoutEffect, useEffect } from "react";
 
 function useWindowSize() {
@@ -40,10 +42,12 @@ export default function Home() {
 
       <Header isOpened={isOpened} setDrawerStatus={setDrawerStatus} />
       <MainHeader isOpened={isOpened} setDrawerStatus={setDrawerStatus} menuColor={menuColor} />
-      <About setMenuColor={setMenuColor} />
-      <Resume />
-      <Services />
-      <Contact />
+      <div className={isOpened ? sassStyles.indexMargin : ""}>
+        <About setMenuColor={setMenuColor} menuColor={menuColor} />
+        <Resume />
+        <Services />
+        <Contact />
+      </div>
     </>
   )
 }

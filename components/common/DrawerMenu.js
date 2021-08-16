@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { SwipeableDrawer } from '@material-ui/core';
+import { Drawer } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
@@ -104,12 +104,12 @@ export default function Header(props) {
     const [isOpened, toggleDrawer] = useState(props.isOpened);
     useEffect(() => {
         toggleDrawer(props.isOpened);
-    }, [props.isOpened]);
+    }, [props?.isOpened ]);
     return (
         <>
-            <SwipeableDrawer className={classes.root} anchor={"left"} onClose={() => { props.setDrawerStatus(false) }} open={isOpened}>
+            <Drawer disableEnforceFocus className={classes.root} anchor={"left"} onClose={() => { props.setDrawerStatus(false) }} open={isOpened }>
                 <DrawerMenu setDrawerStatus={props.setDrawerStatus} />
-            </SwipeableDrawer>
+            </Drawer>
         </>
     );
 }
