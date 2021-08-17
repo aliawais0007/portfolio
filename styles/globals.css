@@ -27,3 +27,12 @@ a {
     max-width: max-content;
   }
 }
+
+.intl-tel-input.allow-dropdown .selected-flag {
+  display: flex !important;
+}
+.intl-tel-input.allow-dropdown.separate-dial-code .selected-dial-code {
+  display: table-cell;
+  vertical-align: middle;
+  padding-left: 10px !important;
+}

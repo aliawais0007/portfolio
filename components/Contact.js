@@ -1,45 +1,104 @@
 import sassStyles from "../styles/Home.module.scss";
-import { useState } from "react";
-import { subjectOptions } from "../contants";
-import { Form, Input, Button, Radio } from 'antd';
+import { useState, useRef, useEffect } from "react";
+import { subjectOptions, contactAPI } from "../contants";
+import { Form, Input, Button, Select } from 'antd';
+import IntlTelInput from 'react-intl-tel-input';
+import 'react-intl-tel-input/dist/main.css';
 
 
 export const Contact = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
-    const [subject, setSubject] = useState("");
+    const [phone, setPhone] = useState("");
+    const [subject, setSubject] = useState(["web development"]);
     const [message, setMessage] = useState("");
     const [form] = Form.useForm();
-    const [formLayout, setFormLayout] = useState('horizontal');
+    const [formLayout, setFormLayout] = useState('verticle');
+    const phoneRef = useRef();
+    const [country, setCountry] = useState(null);
+    const { Option } = Select;
 
-    const formItemLayout =
-        formLayout === 'horizontal'
-            ? {
-                labelCol: {
-                    span: 4,
-                    style:{
-                        "text-align": "left",
-                        "font-size": "18px"
-                    }
-                },
-                wrapperCol: {
-                    span: 30,
-                },
+
+    useEffect(() => {
+        setCountry(phoneRef.current && phoneRef.current.selectedCountryData)
+    }, [phoneRef])
+
+    const onFinish = (values) => {
+        const formData = new FormData();
+
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('subject', subject);
+        formData.append('message', message);
+        var details = {
+            'name': name,
+            'email': email,
+            'subject': subject.join(", "),
+            'message': message,
+            "phone": "+" + country.dialCode + phone
+        };
+        var formBody = [];
+        for (var property in details) {
+            var encodedKey = encodeURIComponent(property);
+            var encodedValue = encodeURIComponent(details[property]);
+            formBody.push(encodedKey + "=" + encodedValue);
+        }
+        formBody = formBody.join("&");
+
+        const initObject = {
+            method: "post",
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded'
+            },
+            body: formBody
+
+        }
+        fetch(contactAPI, initObject)
+            .then(response => {
+                if (response.ok) {
+                    return response.json()
+                }
+                else throw response.json();
+            })
+            .then(data => {
+                debugger
+            })
+            .catch(err => {
+                debugger
+            })
+    };
+
+    const onFinishFailed = (errorInfo) => {
+        console.log('Failed:', errorInfo);
+    };
+
+    const children = [];
+    for (let i = 0; i < subjectOptions.length; i++) {
+        children.push(<Option key={subjectOptions[i].value}>{subjectOptions[i].value}</Option>);
+    }
+
+    const formItemLayout = {
+        labelCol: {
+            span: 6,
+            style: {
+                "text-align": "left",
+                "font-size": "18px"
             }
-            : null;
-    const buttonItemLayout =
-        formLayout === 'horizontal'
-            ? {
-                wrapperCol: {
-                    span: 14,
-                    offset: 8,
-                },
-            }
-            : null;
+        },
+        wrapperCol: {
+            span: 30,
+        },
+    };
+    const buttonItemLayout = {
+        wrapperCol: {
+            span: 14,
+            offset: 8,
+        },
+    };
 
     const handleChange = (e) => {
-        const fieldName = "";
 
+        const fieldName = e.target.name;
         switch (fieldName) {
             case "email":
                 setEmail(e.target.value);
@@ -53,7 +112,14 @@ export const Contact = () => {
             case "message":
                 setMessage(e.target.value);
                 break;
+            case "phone":
+                setPhone(country !== null && e.target.value);
+                setCountry
         }
+    }
+
+    const handleSubmit = () => {
+
     }
 
     return (
@@ -69,59 +135,125 @@ export const Contact = () => {
                 </div>
                 <div className={"row"}>
                     <div className={"col-md-6"}>
-                        <iframe width="600" height="450" style={{ border: 0, maxWidth: "100%" }} loading="lazy" allowFullScreen src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJRaypYT5pXz4R1SII5ibX6ME&key=AIzaSyDAAM1M5bIManqOD8407kqt40KD_Le-Odo"></iframe>
+                        <iframe width="600" height="100%" style={{ border: 0, maxWidth: "100%" }} loading="lazy" allowFullScreen src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJRaypYT5pXz4R1SII5ibX6ME&key=AIzaSyDAAM1M5bIManqOD8407kqt40KD_Le-Odo"></iframe>
                     </div>
                     <div className={"col-md-6"}>
                         <div className={sassStyles.form}>
                             <Form
-
+                                onSubmit={handleSubmit}
                                 {...formItemLayout}
                                 layout={formLayout}
                                 form={form}
+                                onFinish={onFinish}
+                                onFinishFailed={onFinishFailed}
                                 initialValues={{
                                     layout: formLayout,
                                 }}
                             >
                                 <Form.Item
                                     label={"Full Name"}
-                                    name="username"
                                     id="name"
-                                    style={{ display: "flex", flexDirection: "column" }}
+                                    style={{ display: "flex", flexDirection: "column", marginBottom: 5 }}
                                     defaultValue={name}
-                                    onChange={handleChange()}
+                                    onChange={(e) => handleChange(e)}
                                     rules={[
                                         {
                                             required: true,
-                                            message: 'Please input your name!',
+                                            message: 'Please input your Full Name!',
                                         },
                                     ]}
                                 >
-                                    <Input />
+                                    <Input name="name" />
                                 </Form.Item>
 
                                 <Form.Item
                                     label="Email"
-                                    name="email"
+
                                     value={email}
-                                    style={{ display: "flex", flexDirection: "column" }}
-                                    onChange={handleChange()}
+                                    style={{ display: "flex", flexDirection: "column", marginBottom: 5 }}
+                                    onChange={(e) => handleChange(e)}
                                     rules={[
                                         {
                                             required: true,
-                                            message: 'Please input your password!',
+                                            message: 'Please input your Email!',
                                         },
                                     ]}
                                 >
-                                    <Input.Password />
+                                    <Input name="email" type={"email"} />
+                                </Form.Item>
+
+                                <Form.Item
+                                    label="Phone"
+                                    style={{ display: "flex", flexDirection: "column", marginBottom: 5 }}
+                                    onChange={(e) => { handleChange(e) }}
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Please input your Email!',
+                                        },
+                                    ]}
+                                >
+                                    <IntlTelInput
+                                        ref={phoneRef}
+                                        style={{ width: "100%" }}
+                                        fieldName="phone"
+                                        value={phone}
+                                        separateDialCode={true}
+                                        containerClassName="intl-tel-input"
+                                        inputClassName="form-control"
+                                        onSelectFlag={() => { setCountry(phoneRef.current.selectedCountryData) }}
+                                    />
+                                </Form.Item>
+
+                                <Form.Item
+                                    label="Subject"
+                                    style={{ display: "flex", flexDirection: "column", marginBottom: 5 }}
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Please input your Subject!',
+                                        },
+                                    ]}
+                                >
+                                    <Select
+                                        value={subject}
+                                        allowClear
+                                        placeholder={"Please Select"}
+
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'Please input your Subject!',
+                                            },
+                                        ]}
+                                        name="subject" onChange={(value) => setSubject(value)} mode="multiple">
+                                        {
+                                            children
+                                        }
+                                    </Select>
+                                </Form.Item>
+                                <Form.Item
+                                    label="Message"
+                                    value={message}
+                                    style={{ display: "flex", flexDirection: "column", marginBottom: 5 }}
+                                    onChange={(e) => handleChange(e)}
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Please input your Requirements!',
+                                        },
+                                    ]}
+                                >
+                                    <Input.TextArea name="message" />
                                 </Form.Item>
 
                                 <Form.Item
                                     wrapperCol={{
-                                        offset: 8,
-                                        span: 16,
+                                        offset: 0,
+                                        span: 30,
                                     }}
                                 >
-                                    <Button type="primary" htmlType="submit">
+                                    <Button type="primary" htmlType="submit" style={{ width: "100%", marginTop: 15 }}>
                                         Submit
                             </Button>
                                 </Form.Item>
