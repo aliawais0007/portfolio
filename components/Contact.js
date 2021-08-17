@@ -14,6 +14,7 @@ export const Contact = () => {
     const [message, setMessage] = useState("");
     const [form] = Form.useForm();
     const [formLayout, setFormLayout] = useState('verticle');
+    const [responseOk, setStatus] = useState(false);
     const phoneRef = useRef();
     const [country, setCountry] = useState(null);
     const { Option } = Select;
@@ -23,9 +24,16 @@ export const Contact = () => {
         setCountry(phoneRef.current && phoneRef.current.selectedCountryData)
     }, [phoneRef])
 
-    const onFinish = (values) => {
+    const emptyInputs=()=>{
+        setName("");
+        setEmail("");
+        setPhone("");
+        setSubject("");
+        setMessage("");
+    }
+    const onFinish = () => {
+        setStatus(true);
         const formData = new FormData();
-
         formData.append('name', name);
         formData.append('email', email);
         formData.append('subject', subject);
@@ -61,10 +69,13 @@ export const Contact = () => {
                 else throw response.json();
             })
             .then(data => {
-                debugger
+                setStatus(false);
+                emptyInputs();
+                alert(data.message);
             })
             .catch(err => {
-                debugger
+                setStatus(false);
+                alert(data.message);
             })
     };
 
@@ -96,6 +107,12 @@ export const Contact = () => {
         },
     };
 
+
+    const Loader = () => {
+        return (
+            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+        );
+    }
     const handleChange = (e) => {
 
         const fieldName = e.target.name;
@@ -253,9 +270,9 @@ export const Contact = () => {
                                         span: 30,
                                     }}
                                 >
-                                    <Button type="primary" htmlType="submit" style={{ width: "100%", marginTop: 15 }}>
-                                        Submit
-                            </Button>
+                                    <Button type="primary" htmlType="submit" style={{ width: "100%", marginTop: 15, display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                        {!responseOk ? "Submit" : <Loader />}
+                                    </Button>
                                 </Form.Item>
                             </Form>
                         </div>
