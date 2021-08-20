@@ -6,6 +6,7 @@ import IntlTelInput from 'react-intl-tel-input';
 import 'react-intl-tel-input/dist/main.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import fetchJsonp from "fetch-jsonp";
 
 
 export const Contact = () => {
@@ -18,10 +19,17 @@ export const Contact = () => {
     const [responseOk, setStatus] = useState(false);
     const phoneRef = useRef();
     const [country, setCountry] = useState(null);
+    const [countryCode, setDefaultCountry] = useState('ae');
     const { Option } = Select;
 
 
     useEffect(() => {
+        fetch("https://ipinfo.io/json", function () { })
+            .then(response => response.json())
+            .then((resp) => {
+                let cCode = (resp && resp.country) ? resp.country : "ae";
+                setDefaultCountry(cCode);
+            });
         setCountry(phoneRef.current && phoneRef.current.selectedCountryData)
     }, [phoneRef])
 
@@ -262,6 +270,7 @@ export const Contact = () => {
                                         style={{ width: "100%" }}
                                         fieldName="phone"
                                         value={phone}
+                                        defaultCountry={countryCode}
                                         separateDialCode={true}
                                         containerClassName="intl-tel-input"
                                         inputClassName="form-control"
