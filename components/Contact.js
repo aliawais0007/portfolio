@@ -6,7 +6,6 @@ import IntlTelInput from 'react-intl-tel-input';
 import 'react-intl-tel-input/dist/main.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import fetchJsonp from "fetch-jsonp";
 
 
 export const Contact = () => {
