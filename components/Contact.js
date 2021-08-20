@@ -4,6 +4,8 @@ import { subjectOptions, contactAPI } from "../contants";
 import { Form, Input, Button, Select } from 'antd';
 import IntlTelInput from 'react-intl-tel-input';
 import 'react-intl-tel-input/dist/main.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export const Contact = () => {
@@ -13,7 +15,6 @@ export const Contact = () => {
     const [subject, setSubject] = useState(["web development"]);
     const [message, setMessage] = useState("");
     const [form] = Form.useForm();
-    const [formLayout, setFormLayout] = useState('verticle');
     const [responseOk, setStatus] = useState(false);
     const phoneRef = useRef();
     const [country, setCountry] = useState(null);
@@ -31,52 +32,115 @@ export const Contact = () => {
         setSubject("");
         setMessage("");
     }
-    const onFinish = () => {
-        setStatus(true);
-        const formData = new FormData();
-        formData.append('name', name);
-        formData.append('email', email);
-        formData.append('subject', subject);
-        formData.append('message', message);
-        var details = {
-            'name': name,
-            'email': email,
-            'subject': subject.join(", "),
-            'message': message,
-            "phone": "+" + country.dialCode + phone
-        };
-        var formBody = [];
-        for (var property in details) {
-            var encodedKey = encodeURIComponent(property);
-            var encodedValue = encodeURIComponent(details[property]);
-            formBody.push(encodedKey + "=" + encodedValue);
-        }
-        formBody = formBody.join("&");
 
-        const initObject = {
-            method: "post",
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: formBody
+    const errorHandler = (error) => {
+        toast.error(error, {
+            position: toast.POSITION.TOP_RIGHT
+        })
+    }
 
-        }
-        fetch(contactAPI, initObject)
-            .then(response => {
-                if (response.ok) {
-                    return response.json()
+    const formValidate = () => {
+        if (name.length > 0) {
+            if (email.length > 0) {
+                const emailReg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                if (emailReg.test(email.toLowerCase())) {
+                    if (phone.length > 0) {
+                        const phoneReg = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+                        const phoneNumber = "+" + country.dialCode + phone
+                        if (window.intlTelInputUtils.isValidNumber(phoneNumber)) {
+                            if (subject.length > 0) {
+                                if (message.length > 0) {
+                                    return true;
+                                }
+                                else {
+                                    errorHandler("Message Field is Required!");
+                                    return false;
+                                }
+                            }
+                            else {
+                                errorHandler("Subject Field is Required!");
+                                return false;
+                            }
+                        }
+                        else {
+                            errorHandler("Invalid Phone Number!");
+                            return false;
+                        }
+                    }
+                    else {
+                        errorHandler("Phone Field is Required!");
+                        return false;
+                    }
                 }
-                else throw response.json();
-            })
-            .then(data => {
-                setStatus(false);
-                emptyInputs();
-                alert(data.message);
-            })
-            .catch(err => {
-                setStatus(false);
-                err.then(res => alert(res.error));
-            })
+                else {
+                    errorHandler("Email is not Valid!");
+                    return false;
+                }
+
+            }
+            else {
+                errorHandler("Email Field is Required!");
+                return false;
+            }
+        }
+        else {
+            errorHandler("Name Field is Required!");
+            return false;
+        }
+    }
+
+    const onFinish = () => {
+        if (formValidate()) {
+            setStatus(true);
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('email', email);
+            formData.append('subject', subject);
+            formData.append('message', message);
+            var details = {
+                'name': name,
+                'email': email,
+                'subject': subject.join(", "),
+                'message': message,
+                "phone": "+" + country.dialCode + phone
+            };
+            var formBody = [];
+            for (var property in details) {
+                var encodedKey = encodeURIComponent(property);
+                var encodedValue = encodeURIComponent(details[property]);
+                formBody.push(encodedKey + "=" + encodedValue);
+            }
+            formBody = formBody.join("&");
+
+            const initObject = {
+                method: "post",
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: formBody
+
+            }
+            fetch(contactAPI, initObject)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json()
+                    }
+                    else throw response.json();
+                })
+                .then(data => {
+                    setStatus(false);
+                    toast.success("You Requested has been submitted!", {
+                        position: toast.POSITION.TOP_RIGHT
+                    });
+                    emptyInputs();
+                })
+                .catch(err => {
+                    setStatus(false);
+                    err.then(res => toast.error(res.error, {
+                        position: toast.POSITION.TOP_RIGHT
+                    }));
+                })
+        }
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -88,33 +152,22 @@ export const Contact = () => {
         children.push(<Option key={subjectOptions[i].value}>{subjectOptions[i].value}</Option>);
     }
 
-    const formItemLayout = {
-        labelCol: {
-            span: 6,
-            style: {
-                "text-align": "left",
-                "font-size": "18px"
-            }
-        },
-        wrapperCol: {
-            span: 30,
-        },
-    };
-    const buttonItemLayout = {
-        wrapperCol: {
-            span: 14,
-            offset: 8,
-        },
-    };
-
 
     const Loader = () => {
         return (
             <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
         );
     }
+    function isNumber(evt) {
+        debugger
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
     const handleChange = (e) => {
-
         const fieldName = e.target.name;
         switch (fieldName) {
             case "email":
@@ -129,14 +182,9 @@ export const Contact = () => {
             case "message":
                 setMessage(e.target.value);
                 break;
-            case "phone":
-                setPhone(country !== null && e.target.value);
-                setCountry
+            default:
+                setPhone(country !== null && (isNumber(e) && e.target.value));
         }
-    }
-
-    const handleSubmit = () => {
-
     }
 
     return (
@@ -157,14 +205,12 @@ export const Contact = () => {
                     <div className={"col-md-6"}>
                         <div className={sassStyles.form}>
                             <Form
-                                onSubmit={handleSubmit}
-                                {...formItemLayout}
-                                layout={formLayout}
+                                layout={"vertical"}
                                 form={form}
                                 onFinish={onFinish}
                                 onFinishFailed={onFinishFailed}
                                 initialValues={{
-                                    layout: formLayout,
+                                    layout: "vertical",
                                 }}
                             >
                                 <Form.Item
@@ -203,6 +249,7 @@ export const Contact = () => {
                                     label="Phone"
                                     style={{ display: "flex", flexDirection: "column", marginBottom: 5 }}
                                     onChange={(e) => { handleChange(e) }}
+                                    type="number"
                                     rules={[
                                         {
                                             required: true,
@@ -236,7 +283,6 @@ export const Contact = () => {
                                         value={subject}
                                         allowClear
                                         placeholder={"Please Select"}
-
                                         rules={[
                                             {
                                                 required: true,
@@ -279,6 +325,7 @@ export const Contact = () => {
                     </div>
                 </div>
             </div>
+            <ToastContainer autoClose={2000} draggable={true} />
         </section>
     );
 }

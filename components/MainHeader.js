@@ -16,7 +16,7 @@ export const MainHeader = (props) => {
             <div className={sassStyles.fixed_bg} />
             <div className={sassStyles.headerText}>
                 <div>
-                    <MenuIcon className={sassStyles.menuIcon} onClick={() => handleClick()} style={{ color: props.menuColor }} />
+                    <MenuIcon className={sassStyles.menuIcon} onClick={() => handleClick()} style={{ color: props.menuColor, background: "rgba(64, 169, 255, 0.8)", borderRadius: "46%", padding: 3 }} />
                     <div style={{ display: "none", position: "fixed", top: "20px", right: "60px" }}>
                         <Button className={sassStyles.buttonDownload} variant="contained" color="primary" href="../assets/pdf/ali-awais-cv.pdf">
                             Curriculum Vitae

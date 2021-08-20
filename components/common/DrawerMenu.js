@@ -33,10 +33,7 @@ const useStyles = makeStyles({
         flexDirection: "column",
         alignItems: "center",
         padding: "40px",
-        zIndex: 1302,
-        // ['@media (max-width:780px)']: {
-        //     height: "auto",
-        // }
+        zIndex: 1302
     },
     icons: {
         color: "#fff"
