@@ -24,7 +24,7 @@ export const Contact = () => {
         setCountry(phoneRef.current && phoneRef.current.selectedCountryData)
     }, [phoneRef])
 
-    const emptyInputs=()=>{
+    const emptyInputs = () => {
         setName("");
         setEmail("");
         setPhone("");
@@ -56,7 +56,7 @@ export const Contact = () => {
         const initObject = {
             method: "post",
             headers: {
-                'content-type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: formBody
 
@@ -75,7 +75,7 @@ export const Contact = () => {
             })
             .catch(err => {
                 setStatus(false);
-                alert(data.message);
+                err.then(res => alert(res.error));
             })
     };
 

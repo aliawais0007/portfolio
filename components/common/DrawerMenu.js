@@ -34,9 +34,9 @@ const useStyles = makeStyles({
         alignItems: "center",
         padding: "40px",
         zIndex: 1302,
-        ['@media (max-width:780px)']: {
-            height: "auto",
-        }
+        // ['@media (max-width:780px)']: {
+        //     height: "auto",
+        // }
     },
     icons: {
         color: "#fff"
