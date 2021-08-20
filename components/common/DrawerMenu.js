@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Drawer } from '@material-ui/core';
+import { SwipeableDrawer } from '@material-ui/core';
 import List from '@material-ui/core/List';
+import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -32,8 +33,10 @@ const useStyles = makeStyles({
         flexDirection: "column",
         alignItems: "center",
         padding: "40px",
-        zIndex: 1302
-
+        zIndex: 1302,
+        ['@media (max-width:780px)']: {
+            height: "auto",
+        }
     },
     icons: {
         color: "#fff"
@@ -91,8 +94,31 @@ const DrawerMenu = (props) => {
                         </a>
                         <Divider />
                     </div>
+
                 )
                 }
+
+                <List style={styles.link}>
+                    <ListItem className={sassStyles.linkhover}>
+                        <ListItemText primary={"DOWNLOAD PDF's"} />
+                    </ListItem>
+                </List>
+                <List style={styles.link}>
+                    <ListItem className={sassStyles.linkhover}>
+                        <Button className={sassStyles.buttonDownloadDrawer} variant="contained" color="primary" href="../../assets/pdf/ali-awais-cv.pdf" fullWidth>
+                            Curriculum Vitae
+                        </Button>
+                    </ListItem>
+                </List>
+                <Divider />
+                <List style={styles.link}>
+                    <ListItem className={sassStyles.linkhover}>
+                        <Button className={sassStyles.buttonDownloadDrawer} variant="contained" color="primary" href="../../assets/pdf/ali-awais-cover-letter.pdf" fullWidth>
+                            COVER LETTER
+                        </Button>
+                    </ListItem>
+                </List>
+                <Divider />
             </div>
         </div>
     );
@@ -104,12 +130,12 @@ export default function Header(props) {
     const [isOpened, toggleDrawer] = useState(props.isOpened);
     useEffect(() => {
         toggleDrawer(props.isOpened);
-    }, [props?.isOpened ]);
+    }, [props?.isOpened]);
     return (
         <>
-            <Drawer disableEnforceFocus className={classes.root} anchor={"left"} onClose={() => { props.setDrawerStatus(false) }} open={isOpened }>
+            <SwipeableDrawer disableEnforceFocus className={classes.root} anchor={"left"} onOpen={() => { props.setDrawerStatus(true) }} onClose={() => { props.setDrawerStatus(false) }} open={isOpened}>
                 <DrawerMenu setDrawerStatus={props.setDrawerStatus} />
-            </Drawer>
+            </SwipeableDrawer>
         </>
     );
 }

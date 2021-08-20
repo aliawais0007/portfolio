@@ -158,12 +158,12 @@ h2.title {
     display: none !important;
   }
   @media (max-width: 930px) {
-  display: block;
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  width: 38px !important;
-  height: 38px !important;
+    display: block;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 38px !important;
+    height: 38px !important;
   }
 }
 
@@ -298,7 +298,7 @@ div.iconWrapper {
   border-radius: 12px;
   padding: 30px;
   height: 100%;
-  
+
   // input,
   // select {
   //   width: 100%;
@@ -311,6 +311,26 @@ div.iconWrapper {
   // }
 }
 
-.antFormItemLabel{
+.antFormItemLabel {
   text-align: left;
+}
+
+.buttonDownload {
+  @media (max-width: 480px) {
+    margin: 7.5px 7.5px !important;
+  }
+  text-transform: uppercase !important;
+  margin: 0 7.5px !important;
+  background: rgba(2, 115, 255, 1) !important;
+  &:hover {
+    color: #d2d2d2 !important;
+  }
+}
+
+.buttonDownloadDrawer {
+  text-transform: uppercase !important;
+  background: rgba(2, 115, 255, 1) !important;
+  &:hover {
+    color: #d2d2d2 !important;
+  }
 }
