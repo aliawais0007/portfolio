@@ -1,6 +1,6 @@
 module.exports = {
-    contactAPI: "https://ali-portfolio-node.herokuapp.com/contact",
-    // contactAPI: "http://localhost:3000/contact",
+    // contactAPI: "https://ali-portfolio-node.herokuapp.com/contact",
+    contactAPI: "http://localhost:3000/contact",
     name: "Ali Awais",
     tagLine: "I'm",
     title: "JavaScript Developer",
