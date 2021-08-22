@@ -129,7 +129,7 @@ export const Contact = () => {
             }
             fetch(contactAPI, initObject)
                 .then(response => {
-                    if (response.ok) {
+                    if (response.status === 200) {
                         return response.json()
                     }
                     else throw response.json();
@@ -143,9 +143,14 @@ export const Contact = () => {
                 })
                 .catch(err => {
                     setStatus(false);
-                    err.then(res => toast.error(res.error, {
-                        position: toast.POSITION.TOP_RIGHT
-                    }));
+                    err.then(res => {
+                        debugger
+                        // if(res.error.toLowerCase() === "")
+                        toast.error("Request Failed to submit! Try Again Later", {
+                            position: toast.POSITION.TOP_RIGHT
+                        })
+
+                    });
                 })
         }
     };
